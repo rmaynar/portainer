@@ -1,25 +1,42 @@
 version: '3.8'
+
 services:
+  # -----------------------------------------------------------------
+  # 1. JELLYFIN MEDIA SERVER
+  # -----------------------------------------------------------------
   jellyfin:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
     environment:
-      # These variables control the user ID and group ID for file access
       - PUID=${PUID}
       - PGID=${PGID}
-      # This variable sets the container timezone
       - TZ=${TZ} 
     volumes:
-      # We use a variable for the base path to make the config/cache paths portable
       - ${JELLYFIN_BASE_PATH}/config:/config
       - ${JELLYFIN_BASE_PATH}/cache:/cache
-      
-      # The media path is still /media/usb-drive on the host, which is a fixed mount
       - /media/usb-drive:/media 
     ports:
       - 8096:8096
     restart: unless-stopped
-    
-    # OPTIONAL: Hardware Acceleration
+    # OPTIONAL: Hardware Acceleration (Uncomment if needed)
     devices:
       - /dev/dri:/dev/dri
+  # -----------------------------------------------------------------
+  # 2. THREADFIN IPTV PROXY
+  # -----------------------------------------------------------------
+  threadfin:
+    image: threadfin/threadfin
+    container_name: threadfin
+    environment:
+      # Uses the SAME variables as Jellyfin for file permissions
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ} 
+    volumes:
+      # Host path for Threadfin's configuration and EPG data
+      - ${JELLYFIN_BASE_PATH}/threadfin/config:/home/threadfin/.threadfin/
+    ports:
+      # Access the Threadfin Web UI here: http://<IP>:34400
+      - 34400:34400 
+    restart: unless-stopped
+    

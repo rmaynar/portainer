@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Madrid # Set your timezone
+    volumes:
+      # SYSTEM FILES: Replace 'yourusername' with your actual username
+      - /home/yourusername/jellyfin/config:/config
+      - /home/yourusername/jellyfin/cache:/cache
+      
+      # YOUR MEDIA: This matches the mount point we created earlier
+      - /media/usb-drive:/media
+    ports:
+      - 8096:8096
+    restart: unless-stopped
+    
+    # OPTIONAL: Hardware Acceleration
+    # Only keep the 2 lines below if you have an Intel or AMD CPU/GPU. 
+    # If you are on a Raspberry Pi or don't know, you can delete them safely.
+    devices:
+      - /dev/dri:/dev/dri

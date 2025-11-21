@@ -25,7 +25,7 @@ services:
   # 2. THREADFIN IPTV PROXY
   # -----------------------------------------------------------------
   threadfin:
-    image: threadfin/threadfin
+    image: fyb3roptik/threadfin
     container_name: threadfin
     environment:
       # Uses the SAME variables as Jellyfin for file permissions

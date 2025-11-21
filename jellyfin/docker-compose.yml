@@ -34,7 +34,7 @@ services:
       - TZ=${TZ} 
     volumes:
       # Host path for Threadfin's configuration and EPG data
-      - ${JELLYFIN_BASE_PATH}/threadfin/config:/home/threadfin/.threadfin/
+      - ${JELLYFIN_BASE_PATH}/threadfin/config:/home/threadfin/conf
     ports:
       # Access the Threadfin Web UI here: http://<IP>:34400
       - 34400:34400 

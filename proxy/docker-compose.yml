@@ -1,9 +1,10 @@
-version: '3'
 services:
   nanoproxy:
     image: ghcr.io/ryanbekhen/nanoproxy:latest
     container_name: nanoproxy
     restart: unless-stopped
+    environment:
+        NO_AUTH_MODE: "true"
     ports:
       - "1080:1080"    # SOCKS5 port
       - "8080:8080"    # HTTP port

@@ -1,0 +1,10 @@
+services:
+  web:
+    image: nginx:alpine
+    container_name: my-web-server
+    restart: unless-stopped
+    ports:
+      - "8888:80"
+    volumes:
+      # Mounts ~/www on the host to NGINX root inside the container
+      - ${WORKSPACE_DIR}/portainer/http-server:/usr/share/nginx/html:ro
